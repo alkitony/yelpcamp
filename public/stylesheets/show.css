@@ -1,0 +1,23 @@
+.rightJustifyAmount {
+    text-align: right;
+}
+
+.authorBold {
+    font-weight: 600;
+}
+
+.dateFontSize {
+    font-size: 0.9em;
+}
+
+.dateSpacing {
+    margin-right: 20px;
+}
+
+#deletebtn {
+    display: inline;
+}
+
+.commentSpacing {
+    margin-top: 20px
+}

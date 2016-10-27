@@ -1,0 +1,71 @@
+<% include /partials/header %>
+
+<link rel="stylesheet" href="../stylesheets/show.css">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 sidebar-offcanvas">
+            <p class="lead">Yelp Camp</p>
+            <div class="list-group">
+                <li class="list-group-item"><a href="/campgrounds/new">Enter New Campground</a></li> 
+                <li class="list-group-item"><a href="/campgrounds">View all Campgrounds</a></li> 
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="responsive"src="<%= campground.image %>">
+                <div class="caption-full">
+                    <% if(campground.price) { %>
+                        <h4 class="pull-right">$<%= campground.price %>.00 per night</h4>
+                    <% } else { %>
+                        <h5 class="pull-right">No Price Available</h5>
+                    <% } %>
+                    <h4><a><%= campground.name %></a></h4>
+                    <p><%= campground.description %> </p>
+                    <p>Submitted by: <span class="authorBold"><%= campground.author.username %></span></p>
+                    <% if(campground.addDate || campground.updateDate) { %>
+                        <p class="dateFontSize">
+                            <%= ((campground.addDate) ? ("Created: " + campground.addDate.toLocaleDateString('en-US')) : "") %>
+                            <span class="dateSpacing"></span>
+                            <%= ((campground.updateDate) ? ("Updated: " + campground.updateDate.toLocaleDateString('en-US')) : "") %>
+                        </p>
+                    <% } %>
+                    <% if(currentUser && campground.author._id.equals(currentUser._id)) { %>
+                       <a class ="btn btn-md btn-warning" 
+                           href ="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                       <form id     = "deletebtn" 
+                             action = "/campgrounds/<%= campground._id %>?_method=DELETE" 
+                             method = "POST">
+                           <button class="btn btn-danger">Delete</button>
+                       </form>
+                    <% } %>
+                </div>
+            </div>
+            <div class="well">
+                <div class="pull-left">
+                    <a class="btn btn-success" href= "/campgrounds/<%= campground._id %>/comments/new" >Add New Comment</a>
+                </div>
+                <% campground.comments.forEach(function(comment) { %>
+                    <div class="row">
+                        <div class="col-md-12 commentSpacing">
+                            <span class="authorBold dateSpacing"><%= comment.author.username %></span>
+                            <span class="dateFontSize"><%= ((comment.updateDate) ? (comment.updateDate.toLocaleDateString('en-US')) : "") %></span>
+                            <p><%=comment.comment%></p>
+                            <% if(currentUser && comment.author._id.equals(currentUser._id)) { %>
+                                <a class = "btn btn-xs btn-warning" 
+                                    href = "/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                                <form id     = "deletebtn" 
+                                      action = "/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" 
+                                      method = "POST">
+                                   <button class="btn btn-xs btn-danger">Delete</button>
+                                </form>
+                            <% } %>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include /partials/footer %>

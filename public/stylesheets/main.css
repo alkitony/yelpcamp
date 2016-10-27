@@ -1,0 +1,80 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 40px;
+    margin-top: 60px;
+    background: url(../img/tent-1209076_1920-modified.jpg);
+    background-size: cover;
+    transition: background 1.5s linear;
+    -webkit-backface-visibility: hidden;
+    webkit-transition: background-image 1.5s linear;
+}
+
+.campgrid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.thumbnail img {
+    width: 100%;
+}
+
+.thumbnail .caption-full {
+    padding: 9px;
+    word-wrap: break-word;
+}
+
+.thumbnail {
+    padding: 0;
+    border: 2px solid #c3c0c0;
+}
+
+.well {
+    padding-left: 9px;
+    border-color: #9a9696;
+}
+
+.well-sm {
+    border-color: #4c4343;
+    width: 60%;
+    margin: 25px auto;
+}
+
+.formTitle {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.formStyle {
+    margin: 10px 30px;
+}
+
+.form-group button {
+    width: 30%;
+    margin: 10px auto;
+} 
+
+.formLabel {
+    border: 0;
+    background: none;
+    font-weight: 700;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    background-color: rgba(248,248,248,0.4);
+    color: rgb(0, 0, 0);
+    font-weight: bold;
+}
+
+.footer p {
+    margin: 10px;
+    text-align: center
+}
