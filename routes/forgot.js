@@ -72,7 +72,7 @@
           ], function(err) {
                 if (err) 
                    {
-                    req.flash("error", error.message);
+                    req.flash("error", err.message);
                     return next(err);
                    }
              }

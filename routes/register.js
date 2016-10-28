@@ -24,7 +24,6 @@
               req.flash("error", "Unable to create account. Sys Msg: " + err.message);
               res.redirect("/register");
           } else {
-              console.log("I am in the success - register function");
               req.flash("success", "Account has been created.");
               passport.authenticate("local")(req, res, function(){
                   res.redirect("/campgrounds")
