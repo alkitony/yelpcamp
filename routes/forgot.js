@@ -54,6 +54,7 @@
                    logger: false,
                    debug:  false
                });
+               console.log(smtpTransport);
                var mailOptions = {
                    to:      user.email,
                    from:    'campgroundreset@gmail.com',
@@ -63,7 +64,9 @@
                             'http://' + req.headers.host + '/reset/' + token + '\n\n' +
                             'If you did not request this, please ignore this email and your password will remain unchanged.\n'
                };
+               console.log(mailOptions);
                smtpTransport.sendMail(mailOptions, function(err) {
+                   console.log(err);
                    req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
                    res.redirect("/campgrounds");
                    done(err, 'done');
