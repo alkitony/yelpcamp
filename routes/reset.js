@@ -4,10 +4,10 @@
        passport       = require("passport"),
        expressSession = require("express-session"),
        nodemailer     = require("nodemailer"),
+       ses            = require('nodemailer-ses-transport'),
        async          = require("async"),
        crypto         = require("crypto"),
        envGlobalObj   = require("../envGlobalObj.js");
-
 
 // Define Databases
    var User           = require("../models/user");
@@ -48,18 +48,16 @@
                 });
             },
             function(user, done) {
-               var smtpTransport = nodemailer.createTransport({
-                   service: 'Gmail',
-                   auth: {
-                          user: envGlobalObj.appEmailAddress,
-                          pass: envGlobalObj.appEmailPassword
-                         },
-                   logger: true,
-                   debug:  true
-               });
+              var smtpTransport = nodemailer.createTransport(ses({
+                  accessKeyId:     envGlobalObj.accessKeyId,
+                  secretAccessKey: envGlobalObj.secretAccessKey,
+                  rateLimit:       envGlobalObj.rateLimit,
+                  region:          envGlobalObj.region
+                  })
+               );
                var mailOptions = {
                    to:      user.email,
-                   from:    'campgroundreset@gmail.com',
+                   from:    envGlobalObj.appEmailAddress,
                    subject: 'Your password has been changed',
                    text:    'Hello,\n\n' +
                             'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'

@@ -4,7 +4,8 @@
        passport        = require("passport"),
        expressSession  = require("express-session"),
        nodemailer      = require("nodemailer"),
-       bcrypt          = require("bcrypt-nodejs"),
+       ses             = require('nodemailer-ses-transport'),
+       bcrypt          = require("bcrypt-nodejs"),          
        async           = require("async"),
        crypto          = require("crypto"),
        envGlobalObj    = require("../envGlobalObj.js");
@@ -45,19 +46,17 @@
               });
            },
            function(token, user, done) {
-               var smtpTransport = nodemailer.createTransport({
-                   service: 'Gmail',
-                   auth: {
-                          user: envGlobalObj.appEmailAddress,
-                          pass: envGlobalObj.appEmailPassword
-                         },
-                   logger: false,
-                   debug:  false
-               });
+              var smtpTransport = nodemailer.createTransport(ses({
+                  accessKeyId:     envGlobalObj.accessKeyId,
+                  secretAccessKey: envGlobalObj.secretAccessKey,
+                  rateLimit:       envGlobalObj.rateLimit,
+                  region:          envGlobalObj.region
+                  })
+               );
                console.log(smtpTransport);
                var mailOptions = {
                    to:      user.email,
-                   from:    'campgroundreset@gmail.com',
+                   from:    envGlobalObj.appEmailAddress,
                    subject: 'Campground Password Reset',
                    text:    'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
                             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +

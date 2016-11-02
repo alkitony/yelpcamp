@@ -4,7 +4,10 @@
       appDatabase:      process.env.YCAPPDATABASEURL,
       sessionDatabase:  process.env.YCSESSIONDATABASEURL,
       secretPhrase:     process.env.YCSECRETPHRASE,
-      appEmailAddress:  process.env.YCAPPEMAILADDRESS,
-      appEmailPassword: process.env.YCAPPEMAILPASSWORD
+      accessKeyId:      process.env.YCMAILACCESSKEYID,
+      secretAccessKey:  process.env.YCMAILSECRETACCESSKEY,
+      rateLimit:        process.env.YCRATELIMIT,
+      region:           process.env.YCAWSREGION,
+      appEmailAddress:  process.env.YCAPPEMAILADDRESS
    }
  module.exports = envGlobalObj
