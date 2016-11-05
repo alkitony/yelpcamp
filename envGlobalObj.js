@@ -8,6 +8,7 @@
       secretAccessKey:  process.env.YCMAILSECRETACCESSKEY,
       rateLimit:        process.env.YCRATELIMIT,
       region:           process.env.YCAWSREGION,
-      appEmailAddress:  process.env.YCAPPEMAILADDRESS
+      appEmailAddress:  process.env.YCAPPEMAILADDRESS,
+      websitedir:        process.env.WEBSITEDIRECTORY
    }
  module.exports = envGlobalObj

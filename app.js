@@ -57,27 +57,37 @@
       }
       next();
    });
-   
+
+   app.use(express.static(envGlobalObj.websitedir + "theColorGame"));
+   app.use(express.static(envGlobalObj.websitedir + "keyBoardPlay"));
+   app.get('/thecolorgame',function(req,res){
+     res.sendFile(envGlobalObj.websitedir + 'theColorGame/colorgame.html');
+   });
+   app.get('/keyboardplay',function(req,res){
+     res.sendFile(envGlobalObj.websitedir + 'keyBoardPlay/index.html');
+   });
+
    
 // Seed Database. Seed database must happen after db and security setup
    // seedDB();
    
-// Set user object and message for all routes
+// Set global, user and message object for all routes
    app.use(function(req, res, next){
-       res.locals.currentUser = req.user;
-       res.locals.error       = req.flash("error");
-       res.locals.success     = req.flash("success");
+       res.locals.currentUser  = req.user;
+       res.locals.error        = req.flash("error");
+       res.locals.success      = req.flash("success");
+       res.locals.envGlobalObj = req.envGlobalObj;
        next();
    });
 
 // Add routes to the app
-   app.use("/campgrounds", campgroundRoutes);
-   app.use("/campgrounds/:id/comments", commentRoutes);
-   app.use("/register", registerRoutes);
-   app.use(logInOutRoutes);
-   app.use("/forgot", forgotRoutes);
-   app.use("/reset/:token", resetRoutes);
-   app.use(indexRoutes);
+   app.use("/yelpcamp/campgrounds", campgroundRoutes);
+   app.use("/yelpcamp/campgrounds/:id/comments", commentRoutes);
+   app.use("/yelpcamp/register", registerRoutes);
+   app.use("/yelpcamp/", logInOutRoutes);
+   app.use("/yelpcamp/forgot", forgotRoutes);
+   app.use("/yelpcamp/reset/:token", resetRoutes);
+   app.use("/yelpcamp/",indexRoutes);
 
 // App Listener 
    app.listen(process.env.PORT, process.env.IP, function() {

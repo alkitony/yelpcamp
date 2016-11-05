@@ -1,14 +1,14 @@
 <% include ../partials/header %>
 
-<link rel="stylesheet" href="../stylesheets/show.css">
+<link rel="stylesheet" href="../../stylesheets/show.css">
 
 <div class="container">
     <div class="row">
         <div class="col-md-3 sidebar-offcanvas">
             <p class="lead">Yelp Camp</p>
             <div class="list-group">
-                <li class="list-group-item"><a href="/campgrounds/new">Enter New Campground</a></li> 
-                <li class="list-group-item"><a href="/campgrounds">View all Campgrounds</a></li> 
+                <li class="list-group-item"><a href="new">Enter New Campground</a></li> 
+                <li class="list-group-item"><a href="../campgrounds">View all Campgrounds</a></li> 
             </div>
         </div>
         <div class="col-md-9">
@@ -32,9 +32,9 @@
                     <% } %>
                     <% if(currentUser && campground.author._id.equals(currentUser._id)) { %>
                        <a class ="btn btn-md btn-warning" 
-                           href ="/campgrounds/<%= campground._id %>/edit">Edit</a>
+                           href ="<%= campground._id %>/edit">Edit</a>
                        <form id     = "deletebtn" 
-                             action = "/campgrounds/<%= campground._id %>?_method=DELETE" 
+                             action = "../campgrounds/<%= campground._id %>?_method=DELETE" 
                              method = "POST">
                            <button class="btn btn-danger">Delete</button>
                        </form>
@@ -43,8 +43,10 @@
             </div>
             <div class="well">
                 <div class="pull-left">
-                    <a class="btn btn-success" href= "/campgrounds/<%= campground._id %>/comments/new" >Add New Comment</a>
+                    <a class="btn btn-success" href= "<%= campground._id %>/comments/new" >Add New Comment</a>
                 </div>
+                <br>
+                <br>
                 <% campground.comments.forEach(function(comment) { %>
                     <div class="row">
                         <div class="col-md-12 commentSpacing">
@@ -53,9 +55,9 @@
                             <p><%=comment.comment%></p>
                             <% if(currentUser && comment.author._id.equals(currentUser._id)) { %>
                                 <a class = "btn btn-xs btn-warning" 
-                                    href = "/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                                    href = "<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
                                 <form id     = "deletebtn" 
-                                      action = "/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" 
+                                      action = "<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" 
                                       method = "POST">
                                    <button class="btn btn-xs btn-danger">Delete</button>
                                 </form>

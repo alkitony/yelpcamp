@@ -18,8 +18,8 @@
 // Login with users
    router.post("/login", 
             passport.authenticate("local",
-                                  {successRedirect: "/campgrounds",
-                                   failureRedirect: "/login"}
+                                  {successRedirect: "campgrounds",
+                                   failureRedirect: "login"}
                                  ),
             function(req, res){}
    );
@@ -28,7 +28,7 @@
    router.get("/logout", function(req, res){
       req.logout();
       req.flash("success", "You have been successfully logged out.");
-      res.redirect("/campgrounds");
+      res.redirect("campgrounds");
    });
 
    module.exports = router;

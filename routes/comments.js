@@ -8,14 +8,12 @@
 
 // Add middleware 
    var midWare    = require("../middleware/index"); 
-
-// Set Comment object for comment routes
-   var commentObj = {
-      comment:    "",
-      author:     "",
-      addDate:    "",
-      updateDate: ""
-   }
+   
+// Set Campground object for campground routes
+   router.use(function(req, res, next){
+       req.root = Comment;
+       next();
+   });
 
 // New comment round
    router.get("/new", midWare.isLoggedIn, function(req, res){
@@ -33,12 +31,12 @@
       Campground.findById(req.params.id, function(err, foundCampground){
          if (err) {
             req.flash("error", "Can not find Campground. Sys Msg: " + err.message);
-            res.redirect("/campgrounds");
+            res.redirect("/yelpcamp/campgrounds");
          } else {
-            commentObj.comment    = req.body.comment;
-            commentObj.author     = req.user;
-            commentObj.addDate    = new Date();
-            commentObj.updateDate = new Date();
+            var commentObj = {comment:    req.body.comment,
+                              author:     req.user,
+                              addDate:    new Date(),
+                              updateDate: new Date()}
             Comment.create(commentObj ,function(err,commentSaved){
                if (err) {
                   req.flash("error", "Unable to create Comment. Sys Msg: " + err.message);
@@ -49,16 +47,16 @@
                           req.flash("error", "Unable to associate Comment to the Campground. Sys Msg: " + err.message);
                       } else {
                           req.flash("success", "Comment has been saved");
-                          res.redirect("/campgrounds/" + foundCampground._id);
                       }
                   });                                       
                } 
+               res.redirect("../" + foundCampground._id);
             }); 
          }
       });
    });
 
-// Edit a comment
+// Edit a commen`t
    router.get("/:comment_id/edit", midWare.checkOwner, function(req, res){
       Campground.findById(req.params.id, function(err, foundCampground) {
          if (err) {
@@ -76,28 +74,30 @@
    });
 
 // Put change to the comment to the database
-   router.put("/:comment_id/", midWare.checkOwner, function(req, res){
-      commentObj.comment = req.body.comment;
-      commentObj.updateDate = new Date();
-      Comment.findByIdAndUpdate(req.params.comment_id, commentObj, function(err, updatedComment) {
+   router.put("/:comment_id", midWare.checkOwner, function(req, res){
+      var commentObj = {comment:    req.body.comment.comment,
+                        updateDate: new Date()}
+      console.log("the req obj", req.body);
+      console.log("the comment obj", commentObj);
+      Comment.findByIdAndUpdate(req.params.comment_id, {$set: commentObj}, function(err, updatedComment) {
          if (err) {
             req.flash("error", "Can not update Comment. Sys Msg: " + err.message);
          } else { 
             req.flash("success", "Comment is updated.");
-            res.redirect("/campgrounds/" + req.params.id);
          }
+         res.redirect("/yelpcamp/campgrounds/" + req.params.id);
       });
    });
 
 // Destroy the comment from the database
-   router.delete("/:comment_id/", midWare.checkOwner, function(req, res){
+   router.delete("/:comment_id", midWare.checkOwner, function(req, res){
       Comment.findByIdAndRemove(req.params.comment_id, function(err) {
          if (err) {
             req.flash("error", "Can not delete Comment. Sys Msg: " + err.message);
          } else {
             req.flash("success", "Comment has been deleted.");
-            res.redirect("/campgrounds/" + req.params.id);
          }
+         res.redirect("/yelpcamp/campgrounds/" + req.params.id);
       });
    });
 

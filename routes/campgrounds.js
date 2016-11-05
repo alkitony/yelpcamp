@@ -20,9 +20,10 @@
       Campground.find({}, function(err, campgroundList){
          if (err) {
             req.flash("error", "Could not find Campground. Sys Msg: " + err.message);
+            res.redirect("/yelpcamp")
          } else {
-           res.render("campgrounds/index", {campgroundList : campgroundList}); 
-         }   
+         res.render("campgrounds/index", {campgroundList : campgroundList}); 
+         }
       });
    });
 
@@ -44,22 +45,21 @@
       Campground.create(newCampground, function(err, insertedCampground) {
          if(err){
             req.flash("error", "Unable to create Campground, Sys Msg: " + err.message)
+         } else {
+            req.flash("success","Created Campground");
          }
-         else {
-            req.flash("success", "Campground has been created");
-            res.redirect("/campgrounds");
-         }
+         res.redirect("campgrounds");
       });
    });
 
 // Show the campground details page
    router.get("/:id", function(req, res) {
-      Campground.findById(req.params.id).populate("comments").exec(function(err, foundCampground){
+      Campground.findById(req.params.id).populate({path: "comments", options: {sort: {updateDate: -1}}}).exec(function(err, foundCampground){
          if(err){
             req.flash("error", "Unable to find Campground, Sys Msg: " + err.message)
-         }
-         else {
-            res.render("campgrounds/show", { campground : foundCampground });
+            res.redirect("/yelpcamp/campgrounds");
+         } else {
+         res.render("campgrounds/show", { campground : foundCampground });
          }
       });
    });
@@ -69,21 +69,24 @@
       Campground.findById(req.params.id, function(err, foundCampground){
          if(err){
             req.flash("error", "Unable to find Campground, Sys Msg: " + err.message)
+            res.redirect("yelpcamp/campgrounds");
+         } else {
+            res.render("campgrounds/edit", { campground : foundCampground });
          }
-         else { 
-            res.render("campgrounds/edit", { campground : foundCampground }); }
       });
    });
 
 // Update the campground in the database
    router.put("/:id", midWare.checkOwner, function(req, res){
       req.body.campGround.updateDate = new Date();
+      console.log("Request body campGround", req.body)
       Campground.findByIdAndUpdate(req.params.id, req.body.campGround, function(err, updatedCampground){
          if (err) {
             req.flash("error", "Unable to update Campground, Sys Msg: " + err.message)
+            res.redirect("/yelpcamp/campgrounds");
          } else {
             req.flash("success", "Campground has been updated");
-            res.redirect("/campgrounds/" + updatedCampground._id);
+            res.redirect("./" + updatedCampground._id);
          }
       });
    });
@@ -93,11 +96,10 @@
       Campground.findByIdAndRemove(req.params.id, function(err){
          if (err) {
             req.flash("error", "Unable to delete Campground, Sys Msg: " + err.message);
-            res.redirect("/campgrounds/");
          } else {
             req.flash("success", "Campground has been deleted");
-            res.redirect("/campgrounds/");
          }
+         res.redirect("/yelpcamp/campgrounds");
       });
    });
 
