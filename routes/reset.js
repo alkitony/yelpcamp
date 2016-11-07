@@ -18,7 +18,7 @@
            if (!user) {
                req.flash('error', 'Password reset token is invalid or has expired.');
                console.log("Password token is invalid");
-               return res.redirect('/forgot');
+               return res.redirect('/yelpcamp/forgot');
            }
            res.render('users/reset', { user : user, token : req.params.token });
        });
@@ -32,12 +32,13 @@
                 User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
                     if (!user) {
                         req.flash('error', 'Password reset token is invalid or has expired.');
-                        return res.redirect('/campgrounds');
+                        return res.redirect('/yelpcamp/campgrounds');
                     }
                     user.setPassword(req.body.password, function(err, resetUser){
                        if (err) {
                           req.flash("error", "Unable to reset password");
                        } else {
+                          console.log("Content of reset User", resetUser); 
                           resetUser.resetPasswordToken = undefined;
                           resetUser.resetPasswordExpires = undefined;
                           resetUser.save(function(err, savedUser) {
@@ -48,28 +49,32 @@
                 });
             },
             function(user, done) {
-              var smtpTransport = nodemailer.createTransport(ses({
-                  accessKeyId:     envGlobalObj.accessKeyId,
-                  secretAccessKey: envGlobalObj.secretAccessKey,
-                  rateLimit:       envGlobalObj.rateLimit,
-                  region:          envGlobalObj.region
-                  })
-               );
-               var mailOptions = {
-                   to:      user.email,
-                   from:    envGlobalObj.appEmailAddress,
-                   subject: 'Your password has been changed',
-                   text:    'Hello,\n\n' +
-                            'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
-               };
-               smtpTransport.sendMail(mailOptions, function(err) {
+              
+                var smtpTransport = nodemailer.createTransport({
+                    transport:       'SES',
+                    accessKeyId:     envGlobalObj.accessKeyId,
+                    secretAccessKey: envGlobalObj.secretAccessKey,
+                    region:          envGlobalObj.region
+                });
+
+                var mailOptions = {
+                    to:      user.email,
+                    from:    envGlobalObj.appEmailAddress,
+                    subject: 'Your password has been changed',
+                    text:    'Hello,\n\n' +
+                             'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+                };
+              
+                smtpTransport.sendMail(mailOptions, function(err) {
                     req.flash('success', 'Success! Your password has been changed.');
-                   done(err);
-               });
+                    done(err);
+                });
             }
            ], function(err) {
-                 req.flash("error", "An error occured. Sys Msg: " + err.message);
-                //  res.redirect('/campgrounds');
+                if (err) {
+                     req.flash("error", "An error occured. Sys Msg: " + err.message);
+                }
+                res.redirect('/yelpcamp/campgrounds');
        });
    });
    

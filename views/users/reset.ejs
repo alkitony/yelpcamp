@@ -1,12 +1,28 @@
 <% include ../partials/header %>
 
-<h1>Please reset your password</h1>
-
-<form action="reset/<%= token %>" method="POST">
-    <p>UserName: <%= user.username %></p>
-    <p>Email   : <%= user.email %></p>
-    <input type="password" name="password" placeholder="password">
-    <button>Reset Password</button>
-</form>
+<div class="container">
+    <div class="well well-sm">
+        <div class="row">
+            <h2 class="formTitle">Please reset your password</h2>
+            <div class="formStyle">
+                <form action="../reset/<%= token %>" method="POST">
+                    <div class="form-group">
+                        User name: <span class="formLabel"><%= user.username %></span>
+                    </div>
+                    <div class="form-group">
+                        Email Address: <span class="formLabel"><%= user.email %></span>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="password" name="password" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                       <button class="btn btn-lg btn-primary btn-block">Reset Password</button>
+                    </div>
+                </form>
+                <a href="./../campgrounds">View Campgrounds</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <% include ../partials/footer %>

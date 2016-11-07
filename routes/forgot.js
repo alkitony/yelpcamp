@@ -48,62 +48,27 @@
            },
            function(token, user, done) {
            
-            //  awsses.config({
-            //       accessKeyId:     envGlobalObj.accessKeyId,
-            //       secretAccessKey: envGlobalObj.secretAccessKey,
-            //       region:          envGlobalObj.region,
-            //  });
-       
-             var mailses = new aws.SES({
-                  accessKeyId:     envGlobalObj.accessKeyId,
-                  secretAccessKey: envGlobalObj.secretAccessKey,
-                  region:          envGlobalObj.region
+             var smtpTransport = nodemailer.createTransport({
+                 transport: 'SES',
+                 accessKeyId: envGlobalObj.accessKeyId,
+                 secretAccessKey: envGlobalObj.secretAccessKey,
+                 region: envGlobalObj.region
              });
 
-       
-             // load AWS SES
-            //  var mailses = new awsses.SES({apiVersion: '2010-12-01'});
-            
-             var paramas = {
-                   Source: envGlobalObj.appEmailAddress,
-                   Destination: { ToAddresses: [user.email]},
-                   Message: {
-                     Subject: { Data: "Campground Password Reset"},
-                     Body: { Text: { Data: "Test is this working" } }
-                   }
-                 };
-            
-             mailses.sendEmail ( paramas, function(err, data) {
-                  console.log(err);
-                  req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
-                  res.redirect("/yelpcamp/campgrounds");
-                  done(err, 'done');
-             })
+             var mailOptions = {
+                 to:      user.email,
+                 from:    envGlobalObj.appEmailAddress,
+                 subject: 'Campground Password Reset',
+                 text:    'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                          'http://' + req.headers.host + '/yelpcamp/reset/' + token + '\n\n' +
+                          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+              };
 
-            //   var smtpTransport = nodemailer.createTransport(
-            //       ses({
-            //       accessKeyId:     envGlobalObj.accessKeyId,
-            //       secretAccessKey: envGlobalObj.secretAccessKey,
-            //       region:          envGlobalObj.region,
-            //       })
-            //   );
-            //   console.log(smtpTransport);
-            //   var mailOptions = {
-            //       to:      user.email,
-            //       from:    envGlobalObj.appEmailAddress,
-            //       subject: 'Campground Password Reset',
-            //       text:    'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-            //                 'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-            //                 'http://' + req.headers.host + '/reset/' + token + '\n\n' +
-            //                 'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-            //   };
-            //   console.log(mailOptions);
-            //   smtpTransport.sendMail(mailOptions, function(err) {
-            //       console.log(err);
-            //       req.flash('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
-            //       res.redirect("/yelpcamp/campgrounds");
-            //       done(err, 'done');
-            //   });
+              smtpTransport.sendMail(mailOptions, function(err) {
+                  req.flash('success', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+                  done(err, 'done');
+              });
           }
           ], function(err) {
                 if (err) 
@@ -111,6 +76,7 @@
                     req.flash("error", err.message);
                     return next(err);
                    }
+                  res.redirect("/yelpcamp/forgot");
              }
        );
    });

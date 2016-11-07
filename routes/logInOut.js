@@ -16,13 +16,7 @@
    });
    
 // Login with users
-   router.post("/login", 
-            passport.authenticate("local",
-                                  {successRedirect: "campgrounds",
-                                   failureRedirect: "login"}
-                                 ),
-            function(req, res){}
-   );
+   router.post("/login", passport.authenticate("local", {successRedirect: "/yelpcamp/campgrounds", failureRedirect: "/yelpcamp/login"}),function(req, res){});
    
 // Logout the user
    router.get("/logout", function(req, res){
