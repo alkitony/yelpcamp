@@ -1,5 +1,7 @@
 <% include ../partials/header %>
 
+<link rel="stylesheet" href="../../stylesheets/campgrounds.css">
+
 <div class="container">
     <header class="jumbotron">
         <h1>Welcome to YelpCamp!</h1>
@@ -12,10 +14,11 @@
 
     <div class="row text-center campgrid">
         <% campgroundList.forEach(function(campground) { %>
-            <div class="col-md-3 col-md-6">
+            <div class="col-md-3 col-xs-12">
                 <div class="thumbnail">
-                    <img src="<%= campground.image %>" > </li>
-                    <div class="caption">
+                    <img src="<%= campground.image %>" />
+                    <!--div class="bg-image" style="background-size: cover;background-image: url(' campground.image');width: 100%;height: 100%;padding-bottom: 56.25%;background-position: 50%;"></div-->
+                    <div class="caption" style="min-height: 76px">
                         <h4><%= campground.name %></h4>
                     </div>
                     <p>

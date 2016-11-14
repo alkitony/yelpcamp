@@ -51,20 +51,24 @@
    passport.serializeUser(User.serializeUser());
    passport.deserializeUser(User.deserializeUser());
    
-   app.get("/*", function(req, res, next) {
-      if(typeof req.cookies['connect.cid'] !== 'undefined') {
-         console.log(req.cookies['connect.cid']);
-      }
-      next();
-   });
+   // app.get("/*", function(req, res, next) {
+   //    if(typeof req.cookies['connect.cid'] !== 'undefined') {
+   //       console.log(req.cookies['connect.cid']);
+   //    }
+   //    next();
+   // });
 
    app.use(express.static(envGlobalObj.websitedir + "theColorGame"));
+   app.use(express.static(envGlobalObj.websitedir + "mainSite"));
    app.use(express.static(envGlobalObj.websitedir + "keyBoardPlay"));
+   app.get('/',function(req,res){
+    res.sendFile(envGlobalObj.websitedir + 'mainSite/index.html');
+   });
    app.get('/thecolorgame',function(req,res){
      res.sendFile(envGlobalObj.websitedir + 'theColorGame/colorgame.html');
    });
    app.get('/keyboardplay',function(req,res){
-     res.sendFile(envGlobalObj.websitedir + 'keyBoardPlay/index.html');
+    res.sendFile(envGlobalObj.websitedir + 'keyBoardPlay/keyBoardPlay.html');
    });
 
    
