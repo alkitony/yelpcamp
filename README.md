@@ -7,14 +7,14 @@ This is a full stack application built on Node.js, Express and MongoDB. Responsi
 1. Download/Clone the repository.
 2. NPM Install.
 3. Setup the following environment variables
-       YCAPPDATABASEURL
-       YCSESSIONDATABASEURL
-       YCSECRETPHRASE
-       YCAPPEMAILADDRESS
-       YCMAILACCESSKEYID
-       YCMAILSECRETACCESSKEY
-       YCMAILRATELIMIT
-       YCAWSREGION
+     * YCAPPDATABASEURL
+     * YCSESSIONDATABASEURL
+     * YCSECRETPHRASE
+     * YCAPPEMAILADDRESS
+     * YCMAILACCESSKEYID
+     * YCMAILSECRETACCESSKEY
+     * YCMAILRATELIMIT
+     * YCAWSREGION
 
 **Requirements** Node.js, MongoDB and Amazon SES. 
 
