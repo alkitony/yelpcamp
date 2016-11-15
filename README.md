@@ -1,30 +1,42 @@
 # yelpcamp
-A web bootcamp project. This is a full stack application using Node.js, Express and MongoDB. 
+This is a full stack application built on Node.js, Express and MongoDB. Responsive nature and styling is done with Bootstrap. This site allows for user generating content with comments. A security is in place to prevent changing of content.
 
-
-## keyBoardPlay
-A Portfolio Piece: This site is a variation of the patatap.com site. The key board play site uses paperjs for graphics and animation and howler.js for sound play. The Key Board Play site was an exercise from the Web Developer Bootcamp class. By pressing keys "a" through "z" a circle will be displayed in a random location and a corresponding sound will play. The circle will slowly fade out.
 
 ## Install Procedures
 
-1. Download/Clone the index.html and sounds directory.
-2. Open index.html in a browser.
+1. Download/Clone the repository.
+2. NPM Install.
+3. Setup the following environment variables
+       YCAPPDATABASEURL
+       YCSESSIONDATABASEURL
+       YCSECRETPHRASE
+       YCAPPEMAILADDRESS
+       YCMAILACCESSKEYID
+       YCMAILSECRETACCESSKEY
+       YCMAILRATELIMIT
+       YCAWSREGION
 
-**Note:** You must have an internet connection to run the site. This site uses paperjs and howler.js cdn libraries.
+**Requirements** Node.js, MongoDB and Amazon SES. 
 
 ## Background
+
+This site and code were developed as part of the [Udemy: The Web Developer Bootcamp](https://www.udemy.com/the-web-developer-bootcamp/) course. 
+
 **Author:** Tony Lanera
 
-**Date:** Oct 11th, 2016
+**Date:** Nov 15th, 2016
 
 **Description**
-This site is a variation of the patatap.com site. The key board play site uses paperjs for graphics and animation and howler.js for sound play. The Key Board Play site was an exercise from the Web Developer Bootcamp class. By pressing keys "a" through "z" a circle will be displayed in a random location and a corresponding sound will play. The circle will slowly fade out.
+
+This site is inspired by the yelp site, which allows users to post and submit reviews/comments. An account is required to submit a post and make comments. An indivual can only edit their own posting or comments. A person is also able to reset their password. Comments and Posting are stored in a MongoDB.
 
 **Purpose:**
 
-The purpose of the exercise was to become familiar with utilizing a graphical and sound library. For simplicity sake the css style and JS script is contained within the html file. This can be separated out into their respective files. However since the bulk of the effort is JS, it made sense to keep it in one file.
+The purpose of the project was to develop a full stack website which captured user generated content. The project provide experience in developing RESTful Routing, implementing and enforcing a security model, utilizing a NoSQL database, and implementing a responsive design.
 
 **Highlight:**   
 
-The initial exercise had hard coded an object for each letter, which contained a sound and color for each letter between a to z. Based on lessons learned with OOP, I created a constructor function and programmatically created 26 objects.
-
+This project was primarly a code along exercise during the course. However, I added the following features to the site.
+   * Session Cookies stored in MongoDB
+   * Require email token verification for Password Reset
+   * Various Styling and Layout changes 
