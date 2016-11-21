@@ -58,8 +58,6 @@
    //    next();
    // });
    
-   console.log(envGlobalObj);
-
    app.use(express.static(envGlobalObj.websitedir + "theColorGame"));
    app.use(express.static(envGlobalObj.websitedir + "mainSite"));
    app.use(express.static(envGlobalObj.websitedir + "keyBoardPlay"));
