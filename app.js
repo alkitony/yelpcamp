@@ -93,6 +93,6 @@
    app.use("/yelpcamp/",indexRoutes);
 
 // App Listener 
-   app.listen(process.env.PORT, process.env.IP, function() {
+   app.listen(envGlobalObj.listenPort, envGlobalObj.listenIP, function() {
       console.log("Running Yelp Camp v11 has started");
    });

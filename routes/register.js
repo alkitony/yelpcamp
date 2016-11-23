@@ -26,7 +26,7 @@
           } else {
               req.flash("success", "Account has been created.");
               passport.authenticate("local")(req, res, function(){
-                  res.redirect("/campgrounds")
+                  res.redirect("/yelpcamp/campgrounds")
               });
           }
        });

@@ -9,6 +9,8 @@
       rateLimit:        process.env.YCRATELIMIT,
       region:           process.env.YCAWSREGION,
       appEmailAddress:  process.env.YCAPPEMAILADDRESS,
-      websitedir:        process.env.WEBSITEDIRECTORY
+      websitedir:       process.env.WEBSITEDIRECTORY,
+      listenPort:       process.env.PORT,
+      listenIP:         process.env.IP
    }
  module.exports = envGlobalObj
