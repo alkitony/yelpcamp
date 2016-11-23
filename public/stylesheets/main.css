@@ -13,6 +13,30 @@ body {
     webkit-transition: background-image 1.5s linear;
 }
 
+.glyphicon-size {
+    height: 20px;
+    font-size: 30px;
+    text-decoration: none;
+    width: auto;
+}
+
+.social-links li {
+    display: inline-block;
+    margin: 10px auto 0;
+}
+
+.social-links li a {
+    display: table-cell;
+    height: 40px;
+    vertical-align: top;
+    width: 60px;
+}
+.social-links a:hover,
+.social-links a:active,
+.social-links a:focus {
+    text-decoration: none;
+}
+
 .campgrid {
     display: flex;
     flex-wrap: wrap;
@@ -65,13 +89,18 @@ body {
 }
 
 .footer {
+    overflow: hidden;
     position: absolute;
     bottom: 0;
-    height: 40px;
+    height: 50px;
     width: 100%;
-    background-color: rgba(248,248,248,0.4);
+    background-color: rgb(248,248,248);
     color: rgb(0, 0, 0);
     font-weight: bold;
+}
+
+.footer .container {
+    margin: 0 auto;
 }
 
 .footer p {

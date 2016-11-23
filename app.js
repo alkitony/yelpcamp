@@ -27,10 +27,9 @@
    app.use(bodyParser.urlencoded({extended: true}));
    app.set("view engine", "ejs");
    app.use(methodOverride("_method"));
-   app.use(flash());
+   app.use(flash());    
 
 // Database setup, schema definition
-   // mongoose.connect("mongodb://localhost/yelpCamp-v11");
    mongoose.connect(envGlobalObj.appDatabase);
    var Campground = require("./models/campground"),
        Comment    = require("./models/comment"),

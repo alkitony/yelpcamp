@@ -36,7 +36,7 @@
              return next();
          }
          req.flash("error", ("Please login to create a " + req.root.modelName));
-         res.redirect("/login");
+         res.redirect("/yelpcamp/login");
       };
 
 module.exports = middlewareObj
