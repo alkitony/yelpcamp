@@ -37,7 +37,7 @@
               User.findOne({ email: req.body.email }, function(err, user) {
                  if (!user) {
                      req.flash('error', 'No account with that email address exists.');
-                     return res.redirect('/forgot');
+                     return res.redirect('/yelpcamp/forgot');
                  }
                  user.resetPasswordToken = token;
                  user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
