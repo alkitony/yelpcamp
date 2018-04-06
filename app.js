@@ -1,5 +1,6 @@
 // Iniitalize Packages used by Yelp App. All require statements are here except for routes and database definitions
    var express          = require("express"),
+       path             = require("path"),
        app              = express(),
        bodyParser       = require("body-parser"),
        mongoose         = require("mongoose"),
@@ -57,9 +58,14 @@
    //    next();
    // });
    
+   
+
+
+   
    app.use(express.static(envGlobalObj.websitedir + "theColorGame"));
    app.use(express.static(envGlobalObj.websitedir + "mainSite"));
    app.use(express.static(envGlobalObj.websitedir + "keyBoardPlay"));
+   app.use(express.static(path.join(envGlobalObj.websitedir + "react-memory-game", 'build')));
    app.get('/',function(req,res){
     res.sendFile(envGlobalObj.websitedir + 'mainSite/index.html');
    });
@@ -69,7 +75,9 @@
    app.get('/keyboardplay',function(req,res){
     res.sendFile(envGlobalObj.websitedir + 'keyBoardPlay/keyBoardPlay.html');
    });
-
+   app.get('/memorygame', function (req, res) {
+    res.sendFile(path.join(envGlobalObj.websitedir + "react-memory-game", 'build', 'index.html'));
+   });
    
 // Seed Database. Seed database must happen after db and security setup
    // seedDB();
